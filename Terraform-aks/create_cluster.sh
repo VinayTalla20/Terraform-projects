@@ -1,5 +1,11 @@
 #!/bin/sh -xe
 
+echo "[TASK 1] Disable and turn off SWAP"
+sed -i '/swap/d' /etc/fstab
+swapoff -a
+
+systemctl disable --now ufw >/dev/null 2>&1
+
 apt-get update
 apt install curl wget -y
 
@@ -58,3 +64,11 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
+
+containerd config default > /etc/containerd/config.toml
+
+sudo systemctl restart containerd
+
+kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.4/manifests/calico.yaml -O >/dev/null 2>&1
+
+
