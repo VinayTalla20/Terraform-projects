@@ -67,8 +67,9 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 containerd config default > /etc/containerd/config.toml
 
+sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+
 sudo systemctl restart containerd
 
-kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.4/manifests/calico.yaml -O >/dev/null 2>&1
 
 
