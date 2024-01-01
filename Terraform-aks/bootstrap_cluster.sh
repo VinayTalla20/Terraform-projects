@@ -1,5 +1,20 @@
 #!/bin/sh  
 
+echo "[TASK 0] Set SSH user and password"
+# add new user and set password
+sudo su
+sudo useradd -m terraformuser
+echo -e "terraformuser\nterraformuser" | sudo passwd terraformuser
+sudo usermod --shell /bin/bash terraformuser
+
+
+# Enable password authencation using ssh
+sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+systemctl restart sshd
+systemctl restart ssh
+sleep 5
+
+
 echo "[TASK 1] Pull required containers"
 sudo su
 kubeadm config images pull >/dev/null 2>&1
