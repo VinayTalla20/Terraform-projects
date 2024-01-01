@@ -73,5 +73,13 @@ sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config
 
 sudo systemctl restart containerd
 
+# add new user and set password
+sudo useradd -m terraformuser
+echo -e "terraformuser\nterraformuser" | sudo passwd terraformuser
+sudo usermod --shell /bin/bash terraformuser
+
+
+
+
 
 
