@@ -79,6 +79,12 @@ echo -e "terraformuser\nterraformuser" | sudo passwd terraformuser
 sudo usermod --shell /bin/bash terraformuser
 
 
+# Enable password authencation using ssh
+sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+systemctl restart sshd
+systemctl restart ssh
+
+
 
 
 
