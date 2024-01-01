@@ -72,20 +72,3 @@ containerd config default > /etc/containerd/config.toml
 sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 
 sudo systemctl restart containerd
-
-# add new user and set password
-sudo useradd -m terraformuser
-echo -e "terraformuser\nterraformuser" | sudo passwd terraformuser
-sudo usermod --shell /bin/bash terraformuser
-
-
-# Enable password authencation using ssh
-sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
-systemctl restart sshd
-systemctl restart ssh
-
-
-
-
-
-
